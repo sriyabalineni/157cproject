@@ -13,7 +13,7 @@ def fetch_high_rated_business(db ):
 
 
 
-menu_option={1: 'View high rated businesses', 2: 'Find Nearby Businesses',3: 'Find Businesses by Category.', 4: 'Find High Rated Businesses', 5:'Find Popular Businesses'}
+menu_option={1: 'Find Business by Name', 2: 'Find Nearby Businesses',3: 'Find Businesses by Category.', 4: 'Find High Rated Businesses', 5:'Find Popular Businesses'}
 def print_menu(menu_option):
     for key, value in menu_option.items():
         print(key,".", value)
