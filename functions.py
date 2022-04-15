@@ -7,11 +7,23 @@ def fetch_high_rated_business(db ):
     name="name"
     query= {stars:{gte:4}}
     projection={name:1,id:0}
-    cursor = collection.find(query, projection)
+    cursor = collection.find(query, projection).limit(5)
     for record in cursor:
 	    print(record)
 
-
+def fetch_popular_business(db):
+    collection = db.yelpc
+    is_open="is_open"
+    id="_id"
+    name="name"
+    review_count="review_count"
+    #db.yelpc.find( {is_open:1},{"name":1,"_id":0,  "review_count":1}).sort({review_count:-1})
+    query={is_open:1}
+    projection={name:1,id:0, review_count:1}
+    sort_query= {review_count:-1}
+    cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
+    for record in cursor:
+            print(record)
 
 menu_option={1: 'Find Business by Name', 2: 'Find Nearby Businesses',3: 'Find Businesses by Category.', 4: 'Find High Rated Businesses', 5:'Find Popular Businesses'}
 def print_menu(menu_option):
