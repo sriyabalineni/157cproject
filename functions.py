@@ -42,12 +42,8 @@ def main():
                     fetch_high_rated_business(collection)
                     break
                 case 5:
+                    fetch_popular_business(collection)
                     break
-
-
-
-    if option == 4:
-        fetch_high_rated_business(db)
 
 
 # function 1
@@ -82,3 +78,17 @@ def fetch_high_rated_business(collection):
     cursor = collection.find(query, projection)
     for record in cursor:
         print(record)
+
+
+def fetch_popular_business(collection):
+    is_open = "is_open"
+    id = "_id"
+    name = "name"
+    review_count = "review_count"
+    #db.yelpc.find( {is_open:1},{"name":1,"_id":0,  "review_count":1}).sort({review_count:-1})
+    query={is_open:1}
+    projection={name:1,id:0, review_count:1}
+    sort_query= {review_count:-1}
+    cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
+    for record in cursor:
+            print(record)
