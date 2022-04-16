@@ -79,7 +79,7 @@ def fetch_high_rated_business(collection):
     id = "_id"
     name = "name"
     query = {stars: {gte: 4}}
-    projection = {name: 1, id: 0}
+    projection = {name: 1, id: 0,stars:1}
     cursor = collection.find(query, projection).limit(5)
     for record in cursor:
         print(record)
