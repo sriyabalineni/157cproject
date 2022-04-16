@@ -13,13 +13,14 @@ def print_menu(menu_option):
 def main():
     mongoClient = None
     try:
-        mongoClient = MongoClient("54.156.111.243:27020")
+        #mongoClient = MongoClient("localhost:27020")
+        mongoClient = MongoClient()
         print("Connected successfully!!!")
     except:
         print("Could not connect to MongoDB")
 
-    db = mongoClient.get_database("projectDatabase")
-    collection = db.get_collection("business")
+    db = mongoClient.yelpdb
+    collection = db.yelpc
 
     while (True):
         print_menu(menu_option)
@@ -27,23 +28,21 @@ def main():
 
         if option == 6:
             mongoClient.close()
-            return
-        else:
-            match option:
-                case 1:
-                    find_business_by_name(collection)
-                    break
-                case 2:
-                    break
-                case 3:
-                    find_businesses_by_category(collection)
-                    break
-                case 4:
-                    fetch_high_rated_business(collection)
-                    break
-                case 5:
-                    fetch_popular_business(collection)
-                    break
+            break
+        elif option==1:
+            find_business_by_name(collection)
+            break
+        elif option==2:
+            break
+        elif option==3:
+            find_businesses_by_category(collection)
+            break
+        elif option==4:
+            fetch_high_rated_business(collection)
+            break
+        elif option==5:
+            fetch_popular_business(collection)
+            break
 
 
 # function 1
@@ -57,6 +56,12 @@ def find_business_by_name(collection):
 
 
 # function 2 PETER
+def find_nearby_businesses(collection):
+    zipcode = input("Please Enter Your Zipcode: ")
+    output = collection.find({"postal_code": zipcode}, {"name": 1, "address": 1, "stars": 1})
+    for doc in output:
+        print(doc)
+
 
 # function 3
 def find_businesses_by_category(collection):
@@ -68,6 +73,7 @@ def find_businesses_by_category(collection):
         print(doc)
 
 
+# function 4
 def fetch_high_rated_business(collection):
     stars = 'stars'
     gte = '$gte'
@@ -75,11 +81,12 @@ def fetch_high_rated_business(collection):
     name = "name"
     query = {stars: {gte: 4}}
     projection = {name: 1, id: 0}
-    cursor = collection.find(query, projection)
+    cursor = collection.find(query, projection).limit(5)
     for record in cursor:
         print(record)
 
 
+# function 5
 def fetch_popular_business(collection):
     is_open = "is_open"
     id = "_id"
@@ -89,6 +96,13 @@ def fetch_popular_business(collection):
     query={is_open:1}
     projection={name:1,id:0, review_count:1}
     sort_query= {review_count:-1}
+
     cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
+
     for record in cursor:
             print(record)
+
+
+if __name__=="__main__":
+    main()
+    
