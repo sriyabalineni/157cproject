@@ -13,7 +13,7 @@ def print_menu(menu_option):
 def main():
     mongoClient = None
     try:
-        mongoClient = MongoClient("localhost:27020")
+        mongoClient = MongoClient("54.156.111.243:27020")
         print("Connected successfully!!!")
     except:
         print("Could not connect to MongoDB")
