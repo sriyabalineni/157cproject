@@ -1,7 +1,7 @@
 import pymongo
 from pymongo import MongoClient
-mongoCLient = MongoClient("localhost:27020")
-db = mongoCLient["myDB"]
+mongoClient = MongoClient("localhost:27020")
+db = mongoClient["projectDatabase"]
 collection = db["business"]
 
 # Read
@@ -40,3 +40,9 @@ def delete_doc():
     print(collection.find_one({"business_id": "mpfCx-BjTdTEA12CZrA5Pw"}))
     print(collection.delete_one({"business_id": "mpfCx-BjTdTEA12CZrA5Pw"}))
     print(collection.find_one({"business_id": "mpfCx-BjTdTEA12CZrA5Pw"}))
+
+
+read_doc()
+insert_doc()
+update_doc()
+delete_doc()

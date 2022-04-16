@@ -18,8 +18,8 @@ def main():
     except:
         print("Could not connect to MongoDB")
 
-    db = mongoClient.yelpdb
-    collection = db.yelpc
+    db = mongoClient["projectDatabase"]
+    collection = db["business"]
 
     while (True):
         print_menu(menu_option)
