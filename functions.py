@@ -1,3 +1,4 @@
+
 import pymongo
 from pymongo import MongoClient
 
@@ -14,6 +15,7 @@ def main():
     mongoClient = None
     try:
         mongoClient = MongoClient("localhost:27020")
+        #mongoClient = MongoClient()
         print("Connected successfully!!!")
     except:
         print("Could not connect to MongoDB")
@@ -27,23 +29,24 @@ def main():
 
         if option == 6:
             mongoClient.close()
-            return
+            break
+        elif option==1:
+            find_business_by_name(collection)
+            break
+        elif option==2:
+            break
+        elif option==3:
+            find_businesses_by_category(collection)
+            break
+        elif option==4:
+            fetch_high_rated_business(collection)
+            break
+        elif option==5:
+            fetch_high_rated_business(collection)
+            break
         else:
-            match option:
-                case 1:
-                    find_business_by_name(collection)
-                    break
-                case 2:
-                    break
-                case 3:
-                    find_businesses_by_category(collection)
-                    break
-                case 4:
-                    fetch_high_rated_business(collection)
-                    break
-                case 5:
-                    fetch_popular_business(collection)
-                    break
+          print("Invalid option")
+          break
 
 
 # function 1
@@ -67,7 +70,7 @@ def find_businesses_by_category(collection):
     for doc in output:
         print(doc)
 
-
+#function 4
 def fetch_high_rated_business(collection):
     stars = 'stars'
     gte = '$gte'
@@ -79,7 +82,7 @@ def fetch_high_rated_business(collection):
     for record in cursor:
         print(record)
 
-
+#function 5
 def fetch_popular_business(collection):
     is_open = "is_open"
     id = "_id"
@@ -92,3 +95,6 @@ def fetch_popular_business(collection):
     cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
     for record in cursor:
             print(record)
+
+if __name__=="__main__":
+    main()
