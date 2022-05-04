@@ -2,7 +2,7 @@ import pymongo
 from pymongo import MongoClient
 
 menu_option = {1: 'Find Business by Name', 2: 'Find Nearby Businesses', 3: 'Find Businesses by Category.',
-               4: 'Find High Rated Businesses', 5: 'Find Popular Businesses',7:'Find popular restaurats that do no require reservations', 8:'Find populat businesses that are wheel chair accessible',9:'Find popular restaurants that are good for kids',10:'Find popular restaurants that have outdoor seating',11:'Find popular businesses that are good for groups',12:'Find popular restaurants that offer takeout',13:'Find popular businesses that have free wifi',14:'Find popular restaurants that offer delivery',15:'Find popular businesses that accept credit card' 16: 'Exit'}
+               4: 'Find High Rated Businesses', 5: 'Find Popular Businesses',7:'Find popular restaurats that do not require reservations', 8:'Find populat businesses that are wheel chair accessible',9:'Find popular restaurants that are good for kids',10:'Find popular restaurants that have outdoor seating',11:'Find popular businesses that are good for groups',12:'Find popular restaurants that offer takeout',13:'Find popular businesses that have free wifi',14:'Find popular restaurants that offer delivery',15:'Find popular businesses that accept credit card' 16: 'Exit'}
 
 
 def print_menu(menu_option):
