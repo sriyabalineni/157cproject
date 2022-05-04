@@ -2,7 +2,7 @@ import pymongo
 from pymongo import MongoClient
 
 menu_option = {1: 'Find Business by Name', 2: 'Find Nearby Businesses', 3: 'Find Businesses by Category.',
-               4: 'Find High Rated Businesses', 5: 'Find Popular Businesses', 6: 'Exit'}
+               4: 'Find High Rated Businesses', 5: 'Find Popular Businesses',7:'Find popular restaurats that do no require reservations', 8:'Find populat businesses that are wheel chair accessible',9:'Find popular restaurants that are good for kids',10:'Find popular restaurants that have outdoor seating',11:'Find popular businesses that are good for groups',12:'Find popular restaurants that offer takeout',13:'Find popular businesses that have free wifi',14:'Find popular restaurants that offer delivery',15:'Find popular businesses that accept credit card' 16: 'Exit'}
 
 
 def print_menu(menu_option):
@@ -20,12 +20,11 @@ def main():
 
     db = mongoClient["projectDatabase"]
     collection = db["business"]
-
     while (True):
         print_menu(menu_option)
         option = int(input('Enter your choice: '))
 
-        if option == 6:
+        if option == 16:
             mongoClient.close()
             break
         elif option==1:
@@ -42,7 +41,39 @@ def main():
         elif option==5:
             fetch_popular_business(collection)
             break
+        elif option==7:
+            fetch_restaurants_without_reservations(collection)
+            break
+        elif option==8:
+            fetch_wheelchair_accesible_businesses(collection)
+            break
+        elif option==9:
+            fetch_goodforkids_restaurants(collection)
+            break
+        elif option==10:
+            fetch_outdoor_seating_restaurants(collection)
+            break
+        elif option==11:
+            fetch_good_for_groups(collection)
+            break
+        elif option==12:
+            fetch_takeout_restaurants(collection)
+            break
+        elif option==13:
+            fetch_free_wifi_business(collection)
+            break
+        elif option==14:
+            fetch_delivery_restaurants(collection)
+            break
+        elif option==15:
+            fetch_creditcard_business(collection)
+            break
 
+
+
+
+    
+       
 
 # function 1
 def find_business_by_name(collection):
@@ -169,15 +200,15 @@ def fetch_outdoor_seating_restaurants(collection):
 
 # function 11 Find businesses that are good for groups 
 
-def fetch_outdoor_seating_restaurants(collection):
-    goodforgroups = "attributes.OutdoorSeating"
+def fetch_good_for_groups(collection):
+    goodforgroups = "attributes.RestaurantsGoodForGroups"
     id = "_id"
     name = "name"
     review_count = "review_count"
     true= "True"
     city="city"
     postal_code="postal_code"
-    #db.yelpc.find({'attributes.OutdoorSeating':'True'}, {_id:0,name: 1, city: 1, postal_code: 1}).limit(5)
+    #db.yelpc.find({'attributes.goodforgroups':'True'}, {_id:0,name: 1, city: 1, postal_code: 1}).limit(5)
     query={goodforgroups:true}
     projection={name:1,id:0, city:1, postal_code:1}
     cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
@@ -186,7 +217,7 @@ def fetch_outdoor_seating_restaurants(collection):
 
 # function 12 Find restaurants that offer takeout
 
-def fetch_outdoor_seating_restaurants(collection):
+def fetch_takeout_restaurants(collection):
     takeout = "attributes.RestaurantsTakeOut"
     id = "_id"
     name = "name"
@@ -194,7 +225,6 @@ def fetch_outdoor_seating_restaurants(collection):
     true= "True"
     city="city"
     postal_code="postal_code"
-    #db.yelpc.find({'attributes.OutdoorSeating':'True'}, {_id:0,name: 1, city: 1, postal_code: 1}).limit(5)
     query={takeout:true}
     projection={name:1,id:0, city:1, postal_code:1}
     cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
