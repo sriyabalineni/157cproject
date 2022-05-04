@@ -2,7 +2,7 @@ import pymongo
 from pymongo import MongoClient
 
 menu_option = {1: 'Find Business by Name', 2: 'Find Nearby Businesses', 3: 'Find Businesses by Category.',
-               4: 'Find High Rated Businesses', 5: 'Find Popular Businesses',7:'Find popular restaurats that do not require reservations', 8:'Find populat businesses that are wheel chair accessible',9:'Find popular restaurants that are good for kids',10:'Find popular restaurants that have outdoor seating',11:'Find popular businesses that are good for groups',12:'Find popular restaurants that offer takeout',13:'Find popular businesses that have free wifi',14:'Find popular restaurants that offer delivery',15:'Find popular businesses that accept credit card' ,16: 'Exit'}
+               4: 'Find High Rated Businesses', 5: 'Find Popular Businesses',6: 'Find popular businesses that allow pets',7:'Find popular restaurats that do not require reservations', 8:'Find populat businesses that are wheel chair accessible',9:'Find popular restaurants that are good for kids',10:'Find popular restaurants that have outdoor seating',11:'Find popular businesses that are good for groups',12:'Find popular restaurants that offer takeout',13:'Find popular businesses that have free wifi',14:'Find popular restaurants that offer delivery',15:'Find popular businesses that accept credit card' ,16: 'Exit'}
 
 
 def print_menu(menu_option):
@@ -40,6 +40,9 @@ def main():
             break
         elif option==5:
             fetch_popular_business(collection)
+            break
+        elif option==6:
+            fetch_business_alloiwing_pets(collection)
             break
         elif option==7:
             fetch_restaurants_without_reservations(collection)
@@ -129,6 +132,21 @@ def fetch_popular_business(collection):
 
     cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
 
+    for record in cursor:
+            print(record)
+        
+# function 6 find businesses that allow pets
+def fetch_business_alloiwing_pets(collection):
+    pets_allowed = "attributes.DogsAllowed"
+    id = "_id"
+    name = "name"
+    review_count = "review_count"
+    true= "True"
+    city="city"
+    postal_code="postal_code"
+    query={pets_allowed:true}
+    projection={name:1,id:0, city:1, postal_code:1}
+    cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
     for record in cursor:
             print(record)
 
