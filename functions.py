@@ -101,7 +101,157 @@ def fetch_popular_business(collection):
     for record in cursor:
             print(record)
 
+# function 7 Find restaurants that do not require reservations
 
+def fetch_restaurants_without_reservations(collection):
+    reservations = "attributes.RestaurantsReservations"
+    id = "_id"
+    name = "name"
+    review_count = "review_count"
+    false= "False"
+    city="city"
+    postal_code="postal_code"
+    #db.yelpc.find({'attributes.RestaurantsReservations':'False'}, {_id:0,name: 1, city: 1, postal_code: 1}).limit(5)
+    query={reservations:false}
+    projection={name:1,id:0, city:1, postal_code:1}
+    cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
+    for record in cursor:
+            print(record)
+
+# function 8 Find businesses that are wheelchair accessible
+
+def fetch_wheelchair_accesible_businesses(collection):
+    wheelcahir_access = "attributes.WheelchairAccessible"
+    id = "_id"
+    name = "name"
+    review_count = "review_count"
+    true= "True"
+    city="city"
+    postal_code="postal_code"
+    #db.yelpc.find({'attributes.WheelchairAccessible':'True'}, {_id:0,name: 1, city: 1, postal_code: 1}).limit(5)
+    query={wheelcahir_access:true}
+    projection={name:1,id:0, city:1, postal_code:1}
+    cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
+    for record in cursor:
+            print(record)
+
+# function 9 Find restaurants that are good for kids          
+def fetch_goodforkids_restaurants(collection):
+    goodforkids = "attributes.GoodForKids"
+    id = "_id"
+    name = "name"
+    review_count = "review_count"
+    true= "True"
+    city="city"
+    postal_code="postal_code"
+    #db.yelpc.find({'attributes.WheelchairAccessible':'True'}, {_id:0,name: 1, city: 1, postal_code: 1}).limit(5)
+    query={goodforkids:true}
+    projection={name:1,id:0, city:1, postal_code:1}
+    cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
+    for record in cursor:
+            print(record)
+
+# function 10 Find restaurants that have outdoor seating
+def fetch_outdoor_seating_restaurants(collection):
+    OutdoorSeating = "attributes.OutdoorSeating"
+    id = "_id"
+    name = "name"
+    review_count = "review_count"
+    true= "True"
+    city="city"
+    postal_code="postal_code"
+    #db.yelpc.find({'attributes.OutdoorSeating':'True'}, {_id:0,name: 1, city: 1, postal_code: 1}).limit(5)
+    query={OutdoorSeating:true}
+    projection={name:1,id:0, city:1, postal_code:1}
+    cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
+    for record in cursor:
+            print(record)
+
+# function 11 Find businesses that are good for groups 
+
+def fetch_outdoor_seating_restaurants(collection):
+    goodforgroups = "attributes.OutdoorSeating"
+    id = "_id"
+    name = "name"
+    review_count = "review_count"
+    true= "True"
+    city="city"
+    postal_code="postal_code"
+    #db.yelpc.find({'attributes.OutdoorSeating':'True'}, {_id:0,name: 1, city: 1, postal_code: 1}).limit(5)
+    query={goodforgroups:true}
+    projection={name:1,id:0, city:1, postal_code:1}
+    cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
+    for record in cursor:
+            print(record)
+
+# function 12 Find restaurants that offer takeout
+
+def fetch_outdoor_seating_restaurants(collection):
+    takeout = "attributes.RestaurantsTakeOut"
+    id = "_id"
+    name = "name"
+    review_count = "review_count"
+    true= "True"
+    city="city"
+    postal_code="postal_code"
+    #db.yelpc.find({'attributes.OutdoorSeating':'True'}, {_id:0,name: 1, city: 1, postal_code: 1}).limit(5)
+    query={takeout:true}
+    projection={name:1,id:0, city:1, postal_code:1}
+    cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
+    for record in cursor:
+            print(record)
+
+# function 13 Find businesses that have free wifi 
+
+def fetch_free_wifi_business(collection):
+    wifi = "attributes.WiFi"
+    id = "_id"
+    name = "name"
+    review_count = "review_count"
+    true= "True"
+    city="city"
+    postal_code="postal_code"
+    free="free"
+    #db.yelpc.find({'attributes.OutdoorSeating':'True'}, {_id:0,name: 1, city: 1, postal_code: 1}).limit(5)
+    query={wifi:{"$regex": free}}
+    projection={name:1,id:0, city:1, postal_code:1}
+    cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
+    for record in cursor:
+            print(record)
+
+# function 14  Find restaurants that offer delivery
+def fetch_delivery_restaurants(collection):
+    delivery = "attributes.RestaurantsDelivery"
+    id = "_id"
+    name = "name"
+    review_count = "review_count"
+    true= "True"
+    city="city"
+    postal_code="postal_code"
+    free="free"
+    #db.yelpc.find({'attributes.OutdoorSeating':'True'}, {_id:0,name: 1, city: 1, postal_code: 1}).limit(5)
+    query={delivery:true}
+    projection={name:1,id:0, city:1, postal_code:1}
+    cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
+    for record in cursor:
+            print(record)
+
+# function 15   Find businesses that accept credit card
+def fetch_creditcard_business(collection):
+    creditcard = "attributes.BusinessAcceptsCreditCards"
+    id = "_id"
+    name = "name"
+    review_count = "review_count"
+    true= "True"
+    city="city"
+    postal_code="postal_code"
+    free="free"
+    #db.yelpc.find({'attributes.OutdoorSeating':'True'}, {_id:0,name: 1, city: 1, postal_code: 1}).limit(5)
+    query={creditcard:true}
+    projection={name:1,id:0, city:1, postal_code:1}
+    cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
+    for record in cursor:
+            print(record)
 if __name__=="__main__":
     main()
     
