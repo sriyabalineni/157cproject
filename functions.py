@@ -29,48 +29,49 @@ def main():
             break
         elif option==1:
             find_business_by_name(collection)
-            break
+            
         elif option==2:
-            break
+            find_nearby_businesses(collection)
+            
         elif option==3:
             find_businesses_by_category(collection)
-            break
+            
         elif option==4:
             fetch_high_rated_business(collection)
-            break
+            
         elif option==5:
             fetch_popular_business(collection)
-            break
+            
         elif option==6:
             fetch_business_alloiwing_pets(collection)
-            break
+            
         elif option==7:
             fetch_restaurants_without_reservations(collection)
-            break
+            
         elif option==8:
             fetch_wheelchair_accesible_businesses(collection)
-            break
+            
         elif option==9:
             fetch_goodforkids_restaurants(collection)
-            break
+            
         elif option==10:
             fetch_outdoor_seating_restaurants(collection)
-            break
+            
         elif option==11:
             fetch_good_for_groups(collection)
-            break
+            
         elif option==12:
             fetch_takeout_restaurants(collection)
-            break
+            
         elif option==13:
             fetch_free_wifi_business(collection)
-            break
+            
         elif option==14:
             fetch_delivery_restaurants(collection)
-            break
+            
         elif option==15:
             fetch_creditcard_business(collection)
-            break
+            
 
 
 
