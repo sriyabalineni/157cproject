@@ -45,7 +45,7 @@ def main():
         elif option == 5:
             fetch_popular_business(businessCollection)
         elif option == 6:
-            fetch_business_alloiwing_pets(businessCollection)
+            fetch_business_allowing_pets(businessCollection)
         elif option == 7:
             fetch_restaurants_without_reservations(businessCollection)
         elif option == 8:
@@ -78,7 +78,7 @@ def find_business_by_name(collection):
 # function 2
 def find_nearby_businesses(collection):
     zipcode = input("Please Enter Your Zipcode: ")
-    output = collection.find({"postal_code": zipcode}, {"name": 1, "address": 1, "stars": 1})
+    output = collection.find({"postal_code": zipcode}, {"name": 1, "address": 1, "stars": 1}).limit(5)
     for doc in output:
         print(doc)
 
@@ -123,7 +123,7 @@ def fetch_popular_business(collection):
         print(record)
         
 # function 6 find businesses that allow pets
-def fetch_business_alloiwing_pets(collection):
+def fetch_business_allowing_pets(collection):
     pets_allowed = "attributes.DogsAllowed"
     id = "_id"
     name = "name"
@@ -131,8 +131,9 @@ def fetch_business_alloiwing_pets(collection):
     true= "True"
     city="city"
     postal_code="postal_code"
+    attribute='attribute'
     query={pets_allowed:true}
-    projection={name:1,id:0, city:1, postal_code:1}
+    projection={name:1,id:0, city:1, postal_code:1, attribute: 1}
     cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
     for record in cursor:
         print(record)
@@ -147,9 +148,10 @@ def fetch_restaurants_without_reservations(collection):
     false= "False"
     city="city"
     postal_code="postal_code"
+    attribute = 'attribute'
     #db.yelpc.find({'attributes.RestaurantsReservations':'False'}, {_id:0,name: 1, city: 1, postal_code: 1}).limit(5)
     query={reservations:false}
-    projection={name:1,id:0, city:1, postal_code:1}
+    projection={name:1,id:0, city:1, postal_code:1, attribute: 1}
     cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
     for record in cursor:
         print(record)
@@ -164,9 +166,10 @@ def fetch_wheelchair_accesible_businesses(collection):
     true= "True"
     city="city"
     postal_code="postal_code"
+    attribute = 'attribute'
     #db.yelpc.find({'attributes.WheelchairAccessible':'True'}, {_id:0,name: 1, city: 1, postal_code: 1}).limit(5)
     query={wheelcahir_access:true}
-    projection={name:1,id:0, city:1, postal_code:1}
+    projection={name:1,id:0, city:1, postal_code:1, attribute: 1}
     cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
     for record in cursor:
         print(record)
@@ -196,9 +199,10 @@ def fetch_outdoor_seating_restaurants(collection):
     true= "True"
     city="city"
     postal_code="postal_code"
+    attribute = 'attribute'
     #db.yelpc.find({'attributes.OutdoorSeating':'True'}, {_id:0,name: 1, city: 1, postal_code: 1}).limit(5)
     query={OutdoorSeating:true}
-    projection={name:1,id:0, city:1, postal_code:1}
+    projection={name:1,id:0, city:1, postal_code:1, attribute: 1}
     cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
     for record in cursor:
         print(record)
@@ -250,7 +254,7 @@ def fetch_elite_user(collection):
 
 # function 15   Find influenced user
 def fetch_influenced_user(collection):
-    output = collection.find({}, {"_id": 0, "friends": 0}).sort({"review_count": -1}).limit(5)
+    output = collection.find({"fans": {"$gte": 1400}}, {"_id": 0, "friends": 0}).limit(5)
     for doc in output:
         print(doc)
 
