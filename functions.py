@@ -2,7 +2,12 @@ import pymongo
 from pymongo import MongoClient
 
 menu_option = {1: 'Find Business by Name', 2: 'Find Nearby Businesses', 3: 'Find Businesses by Category.',
-               4: 'Find High Rated Businesses', 5: 'Find Popular Businesses',6: 'Find popular businesses that allow pets',7:'Find popular restaurats that do not require reservations', 8:'Find populat businesses that are wheel chair accessible',9:'Find popular restaurants that are good for kids',10:'Find popular restaurants that have outdoor seating',11:'Find popular businesses that are good for groups',12:'Find popular restaurants that offer takeout',13:'Find popular businesses that have free wifi',14:'Find popular restaurants that offer delivery',15:'Find popular businesses that accept credit card' ,16: 'Exit'}
+               4: 'Find High Rated Businesses', 5: 'Find Popular Businesses', 6: 'Find popular businesses that allow pets',
+               7: 'Find popular restaurants that do not require reservations', 8: 'Find populat businesses that are wheel chair accessible',
+               9: 'Find popular restaurants that are good for kids', 10: 'Find popular restaurants that have outdoor seating',
+               11: 'Find popular businesses that are good for groups', 12: 'Find users join from a specific date',
+               13: 'Find user by name', 14: 'Find elite users in a specific year',
+               15: 'Find influenced user', 16: 'Exit'}
 
 
 def print_menu(menu_option):
@@ -19,65 +24,46 @@ def main():
         print("Could not connect to MongoDB")
 
     db = mongoClient["projectDatabase"]
-    collection = db["business"]
+    businessCollection = db["business"]
+    userCollection = db["user"]
+
     while (True):
         print_menu(menu_option)
-        option = int(input('Enter your choice: '))
+        option = int(input('Please enter your choice: '))
 
         if option == 16:
             mongoClient.close()
             break
-        elif option==1:
-            find_business_by_name(collection)
-            
-        elif option==2:
-            find_nearby_businesses(collection)
-            
-        elif option==3:
-            find_businesses_by_category(collection)
-            
-        elif option==4:
-            fetch_high_rated_business(collection)
-            
-        elif option==5:
-            fetch_popular_business(collection)
-            
-        elif option==6:
-            fetch_business_alloiwing_pets(collection)
-            
-        elif option==7:
-            fetch_restaurants_without_reservations(collection)
-            
-        elif option==8:
-            fetch_wheelchair_accesible_businesses(collection)
-            
-        elif option==9:
-            fetch_goodforkids_restaurants(collection)
-            
-        elif option==10:
-            fetch_outdoor_seating_restaurants(collection)
-            
-        elif option==11:
-            fetch_good_for_groups(collection)
-            
-        elif option==12:
-            fetch_takeout_restaurants(collection)
-            
-        elif option==13:
-            fetch_free_wifi_business(collection)
-            
-        elif option==14:
-            fetch_delivery_restaurants(collection)
-            
-        elif option==15:
-            fetch_creditcard_business(collection)
-            
-
-
-
-
-    
-       
+        elif option == 1:
+            find_business_by_name(businessCollection)
+        elif option == 2:
+            find_nearby_businesses(businessCollection)
+        elif option == 3:
+            find_businesses_by_category(businessCollection)
+        elif option == 4:
+            fetch_high_rated_business(businessCollection)
+        elif option == 5:
+            fetch_popular_business(businessCollection)
+        elif option == 6:
+            fetch_business_alloiwing_pets(businessCollection)
+        elif option == 7:
+            fetch_restaurants_without_reservations(businessCollection)
+        elif option == 8:
+            fetch_wheelchair_accesible_businesses(businessCollection)
+        elif option == 9:
+            fetch_goodforkids_restaurants(businessCollection)
+        elif option == 10:
+            fetch_outdoor_seating_restaurants(businessCollection)
+        elif option == 11:
+            fetch_good_for_groups(businessCollection)
+        elif option == 12:
+            fetch_user_on_date(userCollection)
+        elif option == 13:
+            fetch_user_by_name(userCollection)
+        elif option == 14:
+            fetch_elite_user(userCollection)
+        elif option == 15:
+            fetch_influenced_user(userCollection)
 
 # function 1
 def find_business_by_name(collection):
@@ -89,7 +75,7 @@ def find_business_by_name(collection):
         print(doc)
 
 
-# function 2 PETER
+# function 2
 def find_nearby_businesses(collection):
     zipcode = input("Please Enter Your Zipcode: ")
     output = collection.find({"postal_code": zipcode}, {"name": 1, "address": 1, "stars": 1})
@@ -114,7 +100,7 @@ def fetch_high_rated_business(collection):
     id = "_id"
     name = "name"
     query = {stars: {gte: 4}}
-    projection = {name: 1, id: 0,stars:1}
+    projection = {name: 1, id: 0, stars: 1}
     cursor = collection.find(query, projection).limit(5)
     for record in cursor:
         print(record)
@@ -134,7 +120,7 @@ def fetch_popular_business(collection):
     cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
 
     for record in cursor:
-            print(record)
+        print(record)
         
 # function 6 find businesses that allow pets
 def fetch_business_alloiwing_pets(collection):
@@ -149,7 +135,7 @@ def fetch_business_alloiwing_pets(collection):
     projection={name:1,id:0, city:1, postal_code:1}
     cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
     for record in cursor:
-            print(record)
+        print(record)
 
 # function 7 Find restaurants that do not require reservations
 
@@ -166,7 +152,7 @@ def fetch_restaurants_without_reservations(collection):
     projection={name:1,id:0, city:1, postal_code:1}
     cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
     for record in cursor:
-            print(record)
+        print(record)
 
 # function 8 Find businesses that are wheelchair accessible
 
@@ -183,7 +169,7 @@ def fetch_wheelchair_accesible_businesses(collection):
     projection={name:1,id:0, city:1, postal_code:1}
     cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
     for record in cursor:
-            print(record)
+        print(record)
 
 # function 9 Find restaurants that are good for kids          
 def fetch_goodforkids_restaurants(collection):
@@ -199,7 +185,7 @@ def fetch_goodforkids_restaurants(collection):
     projection={name:1,id:0, city:1, postal_code:1}
     cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
     for record in cursor:
-            print(record)
+        print(record)
 
 # function 10 Find restaurants that have outdoor seating
 def fetch_outdoor_seating_restaurants(collection):
@@ -215,7 +201,7 @@ def fetch_outdoor_seating_restaurants(collection):
     projection={name:1,id:0, city:1, postal_code:1}
     cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
     for record in cursor:
-            print(record)
+        print(record)
 
 # function 11 Find businesses that are good for groups 
 
@@ -232,75 +218,43 @@ def fetch_good_for_groups(collection):
     projection={name:1,id:0, city:1, postal_code:1}
     cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
     for record in cursor:
-            print(record)
+        print(record)
 
-# function 12 Find restaurants that offer takeout
 
-def fetch_takeout_restaurants(collection):
-    takeout = "attributes.RestaurantsTakeOut"
-    id = "_id"
-    name = "name"
-    review_count = "review_count"
-    true= "True"
-    city="city"
-    postal_code="postal_code"
-    query={takeout:true}
-    projection={name:1,id:0, city:1, postal_code:1}
-    cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
-    for record in cursor:
-            print(record)
+# function 12 Find users join on a specific date
+def fetch_user_on_date(collection):
+    date = input("Please enter a date in format YYYY-MM-DD: ")
+    output = collection.find({"yelping_since": {"$regex": date}},
+                             {"_id": 0, "friends": 0}).limit(5)
+    for doc in output:
+        print(doc)
 
-# function 13 Find businesses that have free wifi 
 
-def fetch_free_wifi_business(collection):
-    wifi = "attributes.WiFi"
-    id = "_id"
-    name = "name"
-    review_count = "review_count"
-    true= "True"
-    city="city"
-    postal_code="postal_code"
-    free="free"
-    #db.yelpc.find({'attributes.OutdoorSeating':'True'}, {_id:0,name: 1, city: 1, postal_code: 1}).limit(5)
-    query={wifi:{"$regex": free}}
-    projection={name:1,id:0, city:1, postal_code:1}
-    cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
-    for record in cursor:
-            print(record)
+# function 13 Find user by user name
+def fetch_user_by_name(collection):
+    name = input("Please Enter User Name: ")
+    output = collection.find({"name": {"$regex": name}},
+                             {"_id": 0, "friends": 0}).limit(5)
+    for doc in output:
+        print(doc)
 
-# function 14  Find restaurants that offer delivery
-def fetch_delivery_restaurants(collection):
-    delivery = "attributes.RestaurantsDelivery"
-    id = "_id"
-    name = "name"
-    review_count = "review_count"
-    true= "True"
-    city="city"
-    postal_code="postal_code"
-    free="free"
-    #db.yelpc.find({'attributes.OutdoorSeating':'True'}, {_id:0,name: 1, city: 1, postal_code: 1}).limit(5)
-    query={delivery:true}
-    projection={name:1,id:0, city:1, postal_code:1}
-    cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
-    for record in cursor:
-            print(record)
 
-# function 15   Find businesses that accept credit card
-def fetch_creditcard_business(collection):
-    creditcard = "attributes.BusinessAcceptsCreditCards"
-    id = "_id"
-    name = "name"
-    review_count = "review_count"
-    true= "True"
-    city="city"
-    postal_code="postal_code"
-    free="free"
-    #db.yelpc.find({'attributes.OutdoorSeating':'True'}, {_id:0,name: 1, city: 1, postal_code: 1}).limit(5)
-    query={creditcard:true}
-    projection={name:1,id:0, city:1, postal_code:1}
-    cursor = collection.find(query, projection).sort(review_count, -1).limit(5)
-    for record in cursor:
-            print(record)
+# function 14  Find elite user
+def fetch_elite_user(collection):
+    year = input("Please enter a year: ")
+    output = collection.find({"elite": year},
+                             {"_id": 0, "friends": 0}).limit(5)
+    for doc in output:
+        print(doc)
+
+
+# function 15   Find influenced user
+def fetch_influenced_user(collection):
+    output = collection.find({}, {"_id": 0, "friends": 0}).sort({"review_count": -1}).limit(5)
+    for doc in output:
+        print(doc)
+
+
 if __name__=="__main__":
     main()
     
